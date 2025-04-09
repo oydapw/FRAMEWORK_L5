@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Максим Лепешов",
+    "role": "Оператор",
+    "shift": "День",
+    "experience": 5,
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": " Шапик Роман",
+    "role": "Супервайзер",
+    "shift": "Ночь",
+    "experience": 10,
+    "active": true
+  }
+]
