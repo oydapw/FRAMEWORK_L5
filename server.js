@@ -1,30 +1,19 @@
-const Framework = require("./application");
-const Router = require("./router");
+const Framework = require('./src/Framework');
+const machineRoutes = require('./src/routes/machineRoutes');
+const workerRoutes = require('./src/routes/workerRoutes');
+const requestLogger = require('./src/middlewares/requestLogger');
+const errorHandler = require('./src/middlewares/errorHandler');
 
 const app = new Framework();
-const router = new Router();
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-router.get("/", (req, res) => {
-  res.json({ message: "LR5_Lepeshov" });
-});
 
-router.post("/data", (req, res) => {
-  res.status(201).json({ received: req.body });
-});
+app.use(requestLogger);
 
-router.put("/data/:id", (req, res) => {
-  res.json({ id: req.params.id, updated: req.body });
-});
+app.addRouter(machineRoutes);
+app.addRouter(workerRoutes);
 
-router.delete("/data/:id", (req, res) => {
-  res.json({ id: req.params.id, deleted: true });
-});
+app.use(errorHandler);
 
-app.addRouter(router);
-
-app.listen(3000, () => {
-  console.log("Сервер запущен на порту 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Сервер запущен на порту ${PORT}`);
 });
